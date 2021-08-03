@@ -7,7 +7,7 @@ module Coveralls
     def push
       return unless ensure_can_run_locally!
       ENV["COVERALLS_RUN_LOCALLY"] = "true"
-      cmds = ["bundle exec rake"]
+      cmds = ["bundle exec rspec spec --format documentation"]
       if File.exist?('.travis.yml')
         cmds = YAML.load_file('.travis.yml')["script"] || cmds rescue cmds
       end
@@ -18,7 +18,7 @@ module Coveralls
     desc "report", "Runs your test suite locally and displays coverage statistics."
     def report
       ENV["COVERALLS_NOISY"] = "true"
-      exec "bundle exec rake"
+      exec "bundle exec spring rspec --format progress"
       ENV["COVERALLS_NOISY"] = nil
     end
 
